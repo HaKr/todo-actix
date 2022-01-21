@@ -2,14 +2,11 @@
 
 use actix_web::{web, HttpResponse, Responder};
 use deadpool_postgres::{Client, Pool, PoolError};
-use dotenv::dotenv;
 use slog::{crit, error, o, Logger};
-use tokio_postgres::NoTls;
 
 use crate::db::{self, *};
 use crate::models::{AppState, Status};
 
-use crate::config::Config;
 use crate::errors::AppError;
 
 async fn get_client(log: &Logger, pool: &Pool) -> Result<Client, AppError> {

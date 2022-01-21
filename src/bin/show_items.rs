@@ -1,5 +1,4 @@
-extern crate diesel;
-extern crate todo_actix;
+use todo_actix;
 use slog::info;
 
 use todo_actix::{handlers::*, models::AppState};
