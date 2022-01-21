@@ -29,6 +29,9 @@ impl AppError {
                 error_type: AppErrorType::NotFoundError,
                 ..
             } => "The requested item was not found".to_string(),
+            AppError {
+                cause: Some(cause), ..
+            } => cause.clone(),
             _ => "An unexpected error has occurred".to_string(),
         }
     }

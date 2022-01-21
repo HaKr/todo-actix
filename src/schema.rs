@@ -16,7 +16,4 @@ table! {
 
 joinable!(todo_item -> todo_list (list_id));
 
-allow_tables_to_appear_in_same_query!(
-    todo_item,
-    todo_list,
-);
+allow_tables_to_appear_in_same_query!(todo_item, todo_list,);

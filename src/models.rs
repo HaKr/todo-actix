@@ -8,7 +8,6 @@ use tokio_postgres::NoTls;
 
 use crate::config::Config;
 
-
 #[derive(Clone)]
 pub struct AppState {
     pub pool: Pool,
@@ -16,21 +15,20 @@ pub struct AppState {
 }
 
 impl Default for AppState {
-    fn default() -> Self { 
+    fn default() -> Self {
         dotenv().ok();
 
         let config = Config::from_env().unwrap();
-    
+
         let pool = config.pg.create_pool(None, NoTls).unwrap();
-    
+
         let log = Config::configure_log();
-    
+
         return AppState {
             pool: pool.clone(),
             log: log.clone(),
         };
-    
-     }
+    }
 }
 
 #[derive(Serialize)]

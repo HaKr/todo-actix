@@ -17,13 +17,6 @@ async fn get_client(log: &Logger, pool: &Pool) -> Result<Client, AppError> {
     })
 }
 
-fn log_error(log: Logger) -> impl Fn(AppError) -> AppError {
-    move |err| {
-        error!(log, "Error! {}", err.message());
-        err
-    }
-}
-
 pub async fn status() -> Result<impl Responder, AppError> {
     Ok(web::HttpResponse::Ok().json(Status {
         status: "Up".to_string(),
@@ -35,10 +28,5 @@ pub async fn items(state: AppState) -> Result<Vec<TodoItem>, AppError> {
 
     let client: Client = get_client(&log, &pool).await?;
 
-    let result = db::get_items(&client, 1).await;
-
-    result
-        // .map(|todos| HttpResponse::Ok().json(todos))
-        // .map(|todos| todos)
-        .map_err(log_error(log))
+    db::get_items(&client, 1).await
 }
